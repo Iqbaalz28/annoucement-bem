@@ -8,7 +8,7 @@
 export const CONFIG = {
   // === Fase 1: Countdown → Input NIM ===
   // Tanggal target: saat countdown mencapai 0, input NIM muncul
-  PHASE_1_TARGET_DATE: "2026-04-21T02:00:00+07:00",
+  PHASE_1_TARGET_DATE: "2026-04-21T15:30:00+07:00",
   isPhase1Active: true,
 
   // === Fase 2: Penempatan Divisi ===
