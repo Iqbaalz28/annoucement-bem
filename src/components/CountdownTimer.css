@@ -127,3 +127,10 @@
   0%, 100% { transform: scale(1); }
   50% { transform: scale(1.04); }
 }
+
+@media (max-width: 768px) {
+  .countdown-container {
+    margin-top: -10vh;
+    padding-top: 1.5rem;
+  }
+}
