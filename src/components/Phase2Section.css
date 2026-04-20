@@ -1,0 +1,177 @@
+.phase2-container {
+  width: 100%;
+  margin-top: 1.5rem;
+  padding: 1.5rem;
+  border-radius: 16px;
+  text-align: center;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.phase2-container:hover {
+  transform: translateY(-2px);
+}
+
+.phase2-coming-soon {
+  background: linear-gradient(135deg, rgba(249,168,37,0.08), rgba(249,168,37,0.03));
+  border: 1px dashed rgba(249,168,37,0.3);
+}
+
+.phase2-coming-soon:hover {
+  box-shadow: 0 4px 20px rgba(249,168,37,0.12);
+  border-color: rgba(249,168,37,0.5);
+}
+
+.phase2-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem 1.25rem;
+  border-radius: 50px;
+  background: linear-gradient(135deg, var(--color-accent), #fbc02d);
+  color: #1a1a1a;
+  font-family: var(--font-heading);
+  font-size: 0.9rem;
+  font-weight: 700;
+  box-shadow: 0 2px 10px rgba(249,168,37,0.3);
+  animation: pulse-badge 2s ease-in-out infinite;
+  transition: transform 0.3s ease;
+  cursor: default;
+}
+
+.phase2-badge:hover {
+  transform: scale(1.08);
+  animation-play-state: paused;
+}
+
+.phase2-badge svg {
+  transition: transform 0.4s ease;
+}
+
+.phase2-badge:hover svg {
+  transform: rotate(360deg);
+}
+
+@keyframes pulse-badge {
+  0%, 100% { box-shadow: 0 2px 10px rgba(249,168,37,0.3); }
+  50% { box-shadow: 0 4px 20px rgba(249,168,37,0.5); }
+}
+
+.phase2-description {
+  font-family: var(--font-body);
+  font-size: 0.9rem;
+  color: #777;
+  margin-top: 0.75rem;
+}
+
+.phase2-countdown {
+  background: rgba(27,94,32,0.05);
+  border: 1px solid rgba(27,94,32,0.1);
+}
+
+.phase2-title {
+  font-family: var(--font-heading);
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--color-primary);
+  margin-bottom: 0.5rem;
+}
+
+.phase2-timer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  margin-top: 0.75rem;
+}
+
+.phase2-digit {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.25rem;
+  transition: transform 0.2s ease;
+}
+
+.phase2-digit:hover {
+  transform: scale(1.1);
+}
+
+.phase2-digit-value {
+  font-family: var(--font-heading);
+  font-size: 1.5rem;
+  font-weight: 800;
+  color: var(--color-primary);
+}
+
+.phase2-digit-label {
+  font-family: var(--font-body);
+  font-size: 0.65rem;
+  color: #999;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.phase2-sep {
+  font-family: var(--font-heading);
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: var(--color-accent);
+  margin-bottom: 1rem;
+}
+
+.phase2-result {
+  background: linear-gradient(135deg, rgba(27,94,32,0.08), rgba(76,175,80,0.05));
+  border: 1px solid rgba(27,94,32,0.15);
+}
+
+.phase2-division-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.75rem 1.5rem;
+  border-radius: 12px;
+  background: linear-gradient(135deg, var(--color-primary), var(--color-primary-light));
+  color: #fff;
+  font-family: var(--font-heading);
+  font-size: 1.1rem;
+  font-weight: 700;
+  margin-top: 0.5rem;
+  box-shadow: 0 4px 15px rgba(27,94,32,0.3);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.phase2-division-badge:hover {
+  transform: translateY(-2px) scale(1.05);
+  box-shadow: 0 8px 25px rgba(27,94,32,0.4);
+}
+
+.phase2-pending {
+  font-family: var(--font-body);
+  font-size: 0.9rem;
+  color: #888;
+  font-style: italic;
+  margin-top: 0.5rem;
+}
+
+/* ── Mobile Touch Animations (Fallback for no-hover) ── */
+@media (hover: none) and (pointer: coarse) {
+  .phase2-container {
+    animation: mobile-float-card 3.5s ease-in-out infinite;
+  }
+  .phase2-badge svg {
+    animation: mobile-spin-slow 4s linear infinite;
+  }
+  .phase2-division-badge {
+    animation: mobile-pulse-div-badge 3.5s ease-in-out infinite;
+  }
+}
+
+@keyframes mobile-spin-slow {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+@keyframes mobile-pulse-div-badge {
+  0%, 100% { transform: translateY(0) scale(1); box-shadow: 0 4px 15px rgba(27,94,32,0.3); }
+  50% { transform: translateY(-2px) scale(1.03); box-shadow: 0 6px 20px rgba(27,94,32,0.4); }
+}
