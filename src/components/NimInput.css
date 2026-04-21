@@ -181,38 +181,48 @@
   box-shadow: 0 2px 10px rgba(27, 94, 32, 0.3);
 }
 
-/* ── Mobile Touch Animations (Fallback for no-hover) ── */
-@media (hover: none) and (pointer: coarse) {
-  .nim-heading {
-    animation: mobile-pulse-heading 3.5s ease-in-out infinite;
-  }
-  .line-green {
-    animation: mobile-pulse-line-green 3.5s ease-in-out infinite;
-  }
-  .line-gold {
-    animation: mobile-pulse-line-gold 3.5s ease-in-out infinite;
-  }
-  .nim-submit-btn {
-    animation: btn-gradient-slide 3s ease infinite, mobile-pulse-btn 3.5s ease-in-out infinite;
-  }
+/* ── Continuous Ambient Animations (always active) ── */
+.nim-heading {
+  animation: pulse-heading 3.5s ease-in-out infinite;
 }
 
-@keyframes mobile-pulse-heading {
+.line-green {
+  animation: pulse-line-green 2.8s ease-in-out infinite;
+}
+
+.line-gold {
+  animation: pulse-line-gold 3.2s ease-in-out infinite 0.4s;
+}
+
+.nim-input-wrapper {
+  animation: float-input 4s ease-in-out infinite;
+}
+
+.nim-submit-btn {
+  animation: btn-gradient-slide 3s ease infinite, pulse-btn 3s ease-in-out infinite;
+}
+
+@keyframes pulse-heading {
   0%, 100% { transform: scale(1); }
   50% { transform: scale(1.02); }
 }
 
-@keyframes mobile-pulse-line-green {
+@keyframes pulse-line-green {
   0%, 100% { width: 40px; }
-  50% { width: 50px; }
+  50% { width: 55px; }
 }
 
-@keyframes mobile-pulse-line-gold {
+@keyframes pulse-line-gold {
   0%, 100% { width: 30px; }
-  50% { width: 38px; }
+  50% { width: 42px; }
 }
 
-@keyframes mobile-pulse-btn {
+@keyframes float-input {
+  0%, 100% { transform: translateY(0); box-shadow: 0 4px 24px rgba(0, 0, 0, 0.08), 0 1px 3px rgba(0, 0, 0, 0.05); }
+  50% { transform: translateY(-4px); box-shadow: 0 8px 32px rgba(27, 94, 32, 0.12), 0 2px 6px rgba(0, 0, 0, 0.06); }
+}
+
+@keyframes pulse-btn {
   0%, 100% { transform: translateY(0) scale(1); box-shadow: 0 4px 15px rgba(27, 94, 32, 0.3); }
-  50% { transform: translateY(-2px) scale(1.02); box-shadow: 0 6px 20px rgba(27, 94, 32, 0.4); }
+  50% { transform: translateY(-3px) scale(1.03); box-shadow: 0 8px 25px rgba(27, 94, 32, 0.45); }
 }
