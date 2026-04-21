@@ -1,0 +1,180 @@
+/* ── Loading Screen ── */
+.loading-screen {
+  position: fixed;
+  inset: 0;
+  z-index: 10000;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 2.5rem;
+  background: linear-gradient(160deg, #f0f7f0 0%, #e8f5e9 30%, #fffde7 60%, #f0f7f0 100%);
+  background-size: 400% 400%;
+  animation: loading-bg-shift 4s ease infinite;
+  transition: opacity 0.6s ease, transform 0.6s ease;
+}
+
+.loading-screen.loading-exit {
+  opacity: 0;
+  transform: scale(1.05);
+  pointer-events: none;
+}
+
+@keyframes loading-bg-shift {
+  0%, 100% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+}
+
+/* ── Logo Container ── */
+.loading-logo-container {
+  position: relative;
+  width: 120px;
+  height: 120px;
+  perspective: 800px;
+}
+
+.loading-logo {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  border-radius: 50%;
+  animation: loading-3d-spin 2.5s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+  filter: drop-shadow(0 8px 24px rgba(27, 94, 32, 0.3));
+}
+
+@keyframes loading-3d-spin {
+  0% {
+    transform: perspective(800px) rotateY(0deg) rotateX(0deg) scale(1);
+    filter: drop-shadow(0 8px 24px rgba(27, 94, 32, 0.3));
+  }
+  25% {
+    transform: perspective(800px) rotateY(180deg) rotateX(10deg) scale(1.05);
+    filter: drop-shadow(0 12px 32px rgba(249, 168, 37, 0.4));
+  }
+  50% {
+    transform: perspective(800px) rotateY(360deg) rotateX(0deg) scale(1);
+    filter: drop-shadow(0 8px 24px rgba(27, 94, 32, 0.3));
+  }
+  75% {
+    transform: perspective(800px) rotateY(180deg) rotateX(-10deg) scale(1.05);
+    filter: drop-shadow(0 12px 32px rgba(249, 168, 37, 0.4));
+  }
+  100% {
+    transform: perspective(800px) rotateY(0deg) rotateX(0deg) scale(1);
+    filter: drop-shadow(0 8px 24px rgba(27, 94, 32, 0.3));
+  }
+}
+
+/* ── Glow ring behind logo ── */
+.loading-logo-glow {
+  position: absolute;
+  inset: -15px;
+  border-radius: 50%;
+  background: conic-gradient(
+    from 0deg,
+    rgba(27, 94, 32, 0.3),
+    rgba(249, 168, 37, 0.3),
+    rgba(102, 187, 106, 0.3),
+    rgba(27, 94, 32, 0.3)
+  );
+  animation: loading-glow-rotate 2s linear infinite;
+  filter: blur(12px);
+  z-index: -1;
+}
+
+@keyframes loading-glow-rotate {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+/* ── Orbiting dots ── */
+.loading-orbits {
+  position: absolute;
+  inset: -25px;
+  animation: loading-orbit-spin 3s linear infinite;
+}
+
+.loading-orbit-dot {
+  position: absolute;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--color-primary);
+  box-shadow: 0 0 10px rgba(27, 94, 32, 0.5);
+}
+
+.loading-orbit-dot:nth-child(1) { top: 0; left: 50%; transform: translateX(-50%); background: var(--color-primary); }
+.loading-orbit-dot:nth-child(2) { bottom: 0; left: 50%; transform: translateX(-50%); background: var(--color-accent); }
+.loading-orbit-dot:nth-child(3) { top: 50%; left: 0; transform: translateY(-50%); background: #66BB6A; }
+
+@keyframes loading-orbit-spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+/* ── Text ── */
+.loading-text {
+  font-family: var(--font-heading);
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--color-primary);
+  letter-spacing: 2px;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+.loading-text span {
+  display: inline-block;
+  animation: loading-letter-bounce 0.6s ease infinite;
+}
+
+@keyframes loading-letter-bounce {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-5px); }
+}
+
+/* ── Progress Bar ── */
+.loading-progress-track {
+  width: 200px;
+  height: 4px;
+  border-radius: 2px;
+  background: rgba(27, 94, 32, 0.1);
+  overflow: hidden;
+}
+
+.loading-progress-bar {
+  height: 100%;
+  border-radius: 2px;
+  background: linear-gradient(90deg, var(--color-primary), var(--color-accent), var(--color-primary-light));
+  background-size: 200% 100%;
+  animation: loading-progress-shimmer 1.5s ease infinite;
+  transition: width 0.3s ease;
+}
+
+@keyframes loading-progress-shimmer {
+  0% { background-position: 0% 0%; }
+  50% { background-position: 100% 0%; }
+  100% { background-position: 0% 0%; }
+}
+
+/* ── Floating particles in background ── */
+.loading-particle {
+  position: absolute;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: rgba(27, 94, 32, 0.15);
+  animation: loading-float 3s ease-in-out infinite;
+}
+
+.loading-particle:nth-child(1) { top: 15%; left: 10%; animation-delay: 0s; background: rgba(249, 168, 37, 0.2); }
+.loading-particle:nth-child(2) { top: 25%; right: 15%; animation-delay: 0.5s; width: 8px; height: 8px; }
+.loading-particle:nth-child(3) { bottom: 20%; left: 20%; animation-delay: 1s; background: rgba(102, 187, 106, 0.2); }
+.loading-particle:nth-child(4) { bottom: 30%; right: 10%; animation-delay: 1.5s; width: 4px; height: 4px; }
+.loading-particle:nth-child(5) { top: 50%; left: 5%; animation-delay: 0.8s; background: rgba(249, 168, 37, 0.15); }
+.loading-particle:nth-child(6) { top: 10%; right: 30%; animation-delay: 1.2s; width: 10px; height: 10px; background: rgba(27, 94, 32, 0.08); }
+
+@keyframes loading-float {
+  0%, 100% { transform: translateY(0) scale(1); opacity: 0.5; }
+  50% { transform: translateY(-20px) scale(1.3); opacity: 1; }
+}

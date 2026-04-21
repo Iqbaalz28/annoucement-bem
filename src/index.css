@@ -66,9 +66,160 @@ body {
   background: var(--color-bg-gradient);
 }
 
-/* ── Phase Input section ── */
+/* ── Phase Input section with animated background ── */
 .main-content--input {
   background: radial-gradient(ellipse at center top, #f5f9f5 0%, #eef5ee 50%, #e8f0e8 100%);
+  overflow: hidden;
+}
+
+/* ── Floating Gradient Blobs ── */
+.main-content--input::before,
+.main-content--input::after {
+  content: '';
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(80px);
+  opacity: 0.4;
+  z-index: 0;
+  pointer-events: none;
+}
+
+.main-content--input::before {
+  width: 500px;
+  height: 500px;
+  top: -100px;
+  right: -150px;
+  background: radial-gradient(circle, rgba(27, 94, 32, 0.15), rgba(102, 187, 106, 0.08), transparent);
+  animation: blob-float-1 8s ease-in-out infinite;
+}
+
+.main-content--input::after {
+  width: 400px;
+  height: 400px;
+  bottom: 10%;
+  left: -100px;
+  background: radial-gradient(circle, rgba(249, 168, 37, 0.12), rgba(255, 241, 118, 0.06), transparent);
+  animation: blob-float-2 10s ease-in-out infinite;
+}
+
+@keyframes blob-float-1 {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  33% { transform: translate(30px, 40px) scale(1.1); }
+  66% { transform: translate(-20px, 20px) scale(0.95); }
+}
+
+@keyframes blob-float-2 {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  33% { transform: translate(-25px, -30px) scale(1.08); }
+  66% { transform: translate(35px, -15px) scale(0.92); }
+}
+
+/* ── Animated Grid Overlay ── */
+.bg-grid-overlay {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background-image:
+    linear-gradient(rgba(27, 94, 32, 0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(27, 94, 32, 0.03) 1px, transparent 1px);
+  background-size: 50px 50px;
+  animation: grid-shift 20s linear infinite;
+  mask-image: radial-gradient(ellipse at center, black 30%, transparent 70%);
+  -webkit-mask-image: radial-gradient(ellipse at center, black 30%, transparent 70%);
+}
+
+@keyframes grid-shift {
+  0% { background-position: 0 0; }
+  100% { background-position: 50px 50px; }
+}
+
+/* ── CSS Floating Particles (input phase) ── */
+.floating-particles {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.floating-particle {
+  position: absolute;
+  border-radius: 50%;
+  opacity: 0;
+  animation: particle-drift 12s ease-in-out infinite;
+}
+
+.floating-particle:nth-child(1) {
+  width: 6px; height: 6px;
+  background: rgba(27, 94, 32, 0.15);
+  left: 10%; top: 20%;
+  animation-delay: 0s;
+  animation-duration: 10s;
+}
+
+.floating-particle:nth-child(2) {
+  width: 4px; height: 4px;
+  background: rgba(249, 168, 37, 0.2);
+  left: 80%; top: 15%;
+  animation-delay: 2s;
+  animation-duration: 14s;
+}
+
+.floating-particle:nth-child(3) {
+  width: 8px; height: 8px;
+  background: rgba(102, 187, 106, 0.12);
+  left: 50%; top: 60%;
+  animation-delay: 4s;
+  animation-duration: 11s;
+}
+
+.floating-particle:nth-child(4) {
+  width: 5px; height: 5px;
+  background: rgba(27, 94, 32, 0.1);
+  left: 25%; top: 75%;
+  animation-delay: 1s;
+  animation-duration: 13s;
+}
+
+.floating-particle:nth-child(5) {
+  width: 7px; height: 7px;
+  background: rgba(249, 168, 37, 0.12);
+  left: 70%; top: 45%;
+  animation-delay: 3s;
+  animation-duration: 12s;
+}
+
+.floating-particle:nth-child(6) {
+  width: 3px; height: 3px;
+  background: rgba(27, 94, 32, 0.2);
+  left: 90%; top: 80%;
+  animation-delay: 5s;
+  animation-duration: 15s;
+}
+
+.floating-particle:nth-child(7) {
+  width: 6px; height: 6px;
+  background: rgba(102, 187, 106, 0.15);
+  left: 5%; top: 50%;
+  animation-delay: 2.5s;
+  animation-duration: 11s;
+}
+
+.floating-particle:nth-child(8) {
+  width: 4px; height: 4px;
+  background: rgba(249, 168, 37, 0.15);
+  left: 40%; top: 10%;
+  animation-delay: 6s;
+  animation-duration: 16s;
+}
+
+@keyframes particle-drift {
+  0% { transform: translate(0, 0) scale(0); opacity: 0; }
+  10% { opacity: 1; }
+  50% { transform: translate(30px, -50px) scale(1.2); opacity: 0.7; }
+  90% { opacity: 0.3; }
+  100% { transform: translate(-20px, -100px) scale(0); opacity: 0; }
 }
 
 /* ── Scrollbar ── */
@@ -93,4 +244,11 @@ body {
 ::selection {
   background: rgba(27, 94, 32, 0.2);
   color: #1a2e1a;
+}
+
+/* ── Global cursor none for desktop (handled by CustomCursor) ── */
+@media (hover: hover) and (pointer: fine) {
+  * {
+    cursor: none !important;
+  }
 }

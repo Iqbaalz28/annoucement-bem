@@ -57,7 +57,7 @@ export default function Phase2Section({ student }: Phase2SectionProps) {
   }
 
   // Phase 2 expired — show division placement
-  const division = student.penempatan_divisi_biro;
+  const division = student.penempatan_divisi;
 
   return (
     <div className="phase2-container phase2-result" id="phase2-section">

@@ -9,6 +9,24 @@
   background: rgba(255, 255, 255, 0.7);
   border-bottom: 1px solid rgba(27, 94, 32, 0.08);
   box-shadow: 0 1px 8px rgba(0, 0, 0, 0.04);
+  transition: padding 0.3s ease, background 0.3s ease, box-shadow 0.3s ease;
+}
+
+.navbar-scrolled {
+  padding-top: 0;
+  padding-bottom: 0;
+  background: rgba(255, 255, 255, 0.9);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+}
+
+.navbar-scrolled .navbar-inner {
+  padding-top: 0.5rem;
+  padding-bottom: 0.5rem;
+}
+
+.navbar-scrolled .navbar-logo {
+  width: 36px;
+  height: 36px;
 }
 
 .navbar-inner {
@@ -18,6 +36,7 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
+  transition: padding 0.3s ease;
 }
 
 .navbar-brand {
@@ -26,25 +45,65 @@
   gap: 0.75rem;
   cursor: pointer;
   transition: transform 0.3s ease;
+  perspective: 600px;
 }
 
 .navbar-brand:hover {
   transform: scale(1.03);
 }
 
+/* ── Logo Wrapper with Glow ── */
+.navbar-logo-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  perspective: 800px;
+}
+
+.navbar-logo-glow {
+  position: absolute;
+  inset: -4px;
+  border-radius: 50%;
+  background: conic-gradient(
+    from 0deg,
+    var(--color-primary),
+    var(--color-accent),
+    var(--color-primary-light),
+    var(--color-primary)
+  );
+  opacity: 0;
+  animation: logo-glow-rotate 3s linear infinite;
+  transition: opacity 0.4s ease;
+  filter: blur(4px);
+  z-index: 0;
+}
+
+.navbar-brand:hover .navbar-logo-glow {
+  opacity: 0.6;
+}
+
+@keyframes logo-glow-rotate {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
 .navbar-logo {
+  position: relative;
+  z-index: 1;
   width: 44px;
   height: 44px;
   border-radius: 50%;
   object-fit: cover;
   border: 2px solid var(--color-accent);
   box-shadow: 0 0 12px rgba(249, 168, 37, 0.2);
-  transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.3s ease;
+  transition: width 0.3s ease, height 0.3s ease, box-shadow 0.3s ease;
+  transform-style: preserve-3d;
+  will-change: transform;
 }
 
 .navbar-brand:hover .navbar-logo {
-  transform: rotate(10deg) scale(1.1);
-  box-shadow: 0 0 20px rgba(249, 168, 37, 0.4);
+  box-shadow: 0 0 24px rgba(249, 168, 37, 0.5);
 }
 
 .navbar-title {
@@ -53,12 +112,13 @@
   font-size: 1.25rem;
   color: var(--color-primary);
   letter-spacing: 0.5px;
-  transition: letter-spacing 0.3s ease, color 0.3s ease;
+  transition: letter-spacing 0.3s ease, color 0.3s ease, text-shadow 0.3s ease;
 }
 
 .navbar-brand:hover .navbar-title {
   letter-spacing: 1.5px;
   color: var(--color-primary-light);
+  text-shadow: 0 0 20px rgba(27, 94, 32, 0.15);
 }
 
 /* ── Mobile Touch Animations (Fallback for no-hover) ── */
@@ -68,6 +128,9 @@
   }
   .navbar-title {
     animation: mobile-pulse-title 3.5s ease-in-out infinite;
+  }
+  .navbar-logo-glow {
+    opacity: 0.3;
   }
 }
 

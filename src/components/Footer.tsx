@@ -1,5 +1,7 @@
+import { useRef, useEffect } from 'react';
 import { MapPin, Phone, Mail, User } from 'lucide-react';
 import { CONFIG } from '../config';
+import gsap from 'gsap';
 import './Footer.css';
 
 const InstagramIcon = () => (
@@ -23,10 +25,69 @@ const YoutubeIcon = () => (
 );
 
 export default function Footer() {
+  const footerRef = useRef<HTMLElement>(null);
+  const sectionsRef = useRef<HTMLDivElement>(null);
+  const bottomRef = useRef<HTMLDivElement>(null);
+
+  // Scroll-triggered entrance animation
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            // Animate footer sections
+            if (sectionsRef.current) {
+              const sections = sectionsRef.current.querySelectorAll('.footer-section');
+              gsap.fromTo(
+                sections,
+                { opacity: 0, y: 40, scale: 0.95 },
+                { opacity: 1, y: 0, scale: 1, duration: 0.7, stagger: 0.2, ease: 'power3.out' }
+              );
+
+              // Stagger items within each section
+              const items = sectionsRef.current.querySelectorAll('.footer-item');
+              gsap.fromTo(
+                items,
+                { opacity: 0, x: -20 },
+                { opacity: 1, x: 0, duration: 0.4, stagger: 0.1, ease: 'power2.out', delay: 0.4 }
+              );
+
+              // Social links pop in
+              const socials = sectionsRef.current.querySelectorAll('.footer-social-link');
+              gsap.fromTo(
+                socials,
+                { opacity: 0, scale: 0, rotation: -180 },
+                { opacity: 1, scale: 1, rotation: 0, duration: 0.5, stagger: 0.1, ease: 'back.out(2)', delay: 0.6 }
+              );
+            }
+
+            // Animate bottom bar
+            if (bottomRef.current) {
+              gsap.fromTo(
+                bottomRef.current,
+                { opacity: 0, y: 20 },
+                { opacity: 1, y: 0, duration: 0.6, ease: 'power2.out', delay: 0.8 }
+              );
+            }
+
+            observer.disconnect();
+          }
+        });
+      },
+      { threshold: 0.15 }
+    );
+
+    if (footerRef.current) {
+      observer.observe(footerRef.current);
+    }
+
+    return () => observer.disconnect();
+  }, []);
+
   return (
-    <footer className="footer" id="footer">
+    <footer className="footer" id="footer" ref={footerRef}>
       <div className="footer-top-line"></div>
-      <div className="footer-inner">
+      <div className="footer-inner" ref={sectionsRef}>
         <div className="footer-section">
           <h3 className="footer-heading">Kontak</h3>
           <div className="footer-heading-line">
@@ -83,7 +144,7 @@ export default function Footer() {
         </div>
       </div>
 
-      <div className="footer-bottom">
+      <div className="footer-bottom" ref={bottomRef}>
         <p>&copy; {new Date().getFullYear()} {CONFIG.ORG_NAME} — {CONFIG.UNIVERSITY}</p>
       </div>
     </footer>

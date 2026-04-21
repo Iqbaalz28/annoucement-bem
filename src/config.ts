@@ -34,5 +34,5 @@ export type StudentData = {
   program_studi: string;
   angkatan: string;
   status_diterima: boolean;
-  penempatan_divisi_biro: string | null;
+  penempatan_divisi: string | null;
 };

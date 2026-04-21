@@ -6,6 +6,8 @@
   padding: 3rem 1.5rem;
   max-width: 650px;
   margin: 0 auto;
+  position: relative;
+  z-index: 1;
 }
 
 .nim-heading {
@@ -17,6 +19,7 @@
   line-height: 1.3;
   transition: transform 0.3s ease;
   cursor: default;
+  will-change: transform, opacity;
 }
 
 .nim-heading:hover {
@@ -25,6 +28,10 @@
 
 .nim-heading-period {
   color: var(--color-primary-light);
+  background: linear-gradient(135deg, var(--color-primary-light), var(--color-accent));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
 }
 
 .nim-heading-line {
@@ -70,7 +77,7 @@
   box-shadow:
     0 4px 24px rgba(0, 0, 0, 0.08),
     0 1px 3px rgba(0, 0, 0, 0.05);
-  transition: box-shadow 0.3s ease, border-color 0.3s ease;
+  transition: box-shadow 0.3s ease, border-color 0.3s ease, transform 0.3s ease;
   border: 2px solid transparent;
   overflow: hidden;
 }
@@ -80,11 +87,43 @@
     0 4px 24px rgba(27, 94, 32, 0.15),
     0 0 0 3px rgba(27, 94, 32, 0.1);
   border-color: var(--color-primary-light);
+  transform: translateY(-2px);
 }
 
 .nim-input-wrapper.nim-input-error {
   border-color: var(--color-accent);
   box-shadow: 0 0 0 3px rgba(249, 168, 37, 0.2);
+  animation: shake-error 0.4s ease;
+}
+
+@keyframes shake-error {
+  0%, 100% { transform: translateX(0); }
+  25% { transform: translateX(-6px); }
+  50% { transform: translateX(6px); }
+  75% { transform: translateX(-3px); }
+}
+
+/* ── Glow pulse on idle ── */
+.nim-input-wrapper::after {
+  content: '';
+  position: absolute;
+  inset: -2px;
+  border-radius: 18px;
+  background: linear-gradient(135deg, rgba(27, 94, 32, 0.15), rgba(249, 168, 37, 0.1), rgba(102, 187, 106, 0.15));
+  opacity: 0;
+  z-index: -1;
+  animation: input-glow-pulse 3s ease-in-out infinite;
+  filter: blur(8px);
+}
+
+@keyframes input-glow-pulse {
+  0%, 100% { opacity: 0; }
+  50% { opacity: 0.6; }
+}
+
+.nim-input-wrapper:focus-within::after {
+  opacity: 0.8;
+  animation: none;
 }
 
 .nim-input-icon {
@@ -98,7 +137,7 @@
 
 .nim-input-wrapper:focus-within .nim-input-icon {
   color: var(--color-primary);
-  transform: translateY(-50%) scale(1.15);
+  transform: translateY(-50%) scale(1.15) rotate(-10deg);
 }
 
 .nim-input {
@@ -131,6 +170,7 @@
   to { opacity: 1; transform: translateY(0); }
 }
 
+/* ── Submit Button ── */
 .nim-submit-btn {
   padding: 1rem 3rem;
   border: none;
@@ -155,30 +195,58 @@
   100% { background-position: 0% 0%; }
 }
 
-.nim-submit-btn::before {
-  content: '';
+/* ── Shine sweep ── */
+.btn-shine {
   position: absolute;
   top: 0;
   left: -100%;
-  width: 100%;
+  width: 50%;
   height: 100%;
-  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.25), transparent);
-  transition: left 0.6s ease;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+  animation: btn-shine-sweep 3s ease-in-out infinite;
+  pointer-events: none;
+}
+
+@keyframes btn-shine-sweep {
+  0%, 70%, 100% { left: -100%; }
+  30%, 50% { left: 150%; }
+}
+
+.btn-text {
+  position: relative;
+  z-index: 1;
 }
 
 .nim-submit-btn:hover {
-  transform: translateY(-3px) scale(1.03);
+  transform: translateY(-3px) scale(1.05);
   box-shadow: 0 8px 30px rgba(27, 94, 32, 0.45);
   letter-spacing: 0.5px;
-}
-
-.nim-submit-btn:hover::before {
-  left: 100%;
 }
 
 .nim-submit-btn:active {
   transform: translateY(0) scale(0.98);
   box-shadow: 0 2px 10px rgba(27, 94, 32, 0.3);
+}
+
+/* ── Ripple Effect ── */
+.btn-ripple {
+  position: absolute;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.4);
+  transform: scale(0);
+  animation: ripple-expand 0.6s ease-out forwards;
+  pointer-events: none;
+  width: 200px;
+  height: 200px;
+  margin-left: -100px;
+  margin-top: -100px;
+}
+
+@keyframes ripple-expand {
+  to {
+    transform: scale(3);
+    opacity: 0;
+  }
 }
 
 /* ── Continuous Ambient Animations (always active) ── */
@@ -196,10 +264,6 @@
 
 .nim-input-wrapper {
   animation: float-input 4s ease-in-out infinite;
-}
-
-.nim-submit-btn {
-  animation: btn-gradient-slide 3s ease infinite, pulse-btn 3s ease-in-out infinite;
 }
 
 @keyframes pulse-heading {
@@ -220,9 +284,4 @@
 @keyframes float-input {
   0%, 100% { transform: translateY(0); box-shadow: 0 4px 24px rgba(0, 0, 0, 0.08), 0 1px 3px rgba(0, 0, 0, 0.05); }
   50% { transform: translateY(-4px); box-shadow: 0 8px 32px rgba(27, 94, 32, 0.12), 0 2px 6px rgba(0, 0, 0, 0.06); }
-}
-
-@keyframes pulse-btn {
-  0%, 100% { transform: translateY(0) scale(1); box-shadow: 0 4px 15px rgba(27, 94, 32, 0.3); }
-  50% { transform: translateY(-3px) scale(1.03); box-shadow: 0 8px 25px rgba(27, 94, 32, 0.45); }
 }
