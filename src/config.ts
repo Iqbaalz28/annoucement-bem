@@ -13,8 +13,8 @@ export const CONFIG = {
 
   // === Fase 2: Penempatan Divisi ===
   // Set isPhase2Active = true dan isi tanggal saat siap
-  PHASE_2_TARGET_DATE: "2026-04-26T15:30:00+07:00", // Placeholder
-  isPhase2Active: false,
+  PHASE_2_TARGET_DATE: "2026-04-24T16:15:00+07:00", // Placeholder
+  isPhase2Active: true,
 
   // === Metadata Organisasi ===
   ORG_NAME: "BEM KEMAKOM",
