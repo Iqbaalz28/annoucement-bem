@@ -61,7 +61,7 @@ export default function Phase2Section({ student }: Phase2SectionProps) {
 
   return (
     <div className="phase2-container phase2-result" id="phase2-section">
-      <h3 className="phase2-title">Penempatan Anda</h3>
+      <h3 className="phase2-title">Selamat Anda Bergabung Dengan Divisi:</h3>
       {division ? (
         <div className="phase2-division-badge">
           <Sparkles size={20} />
